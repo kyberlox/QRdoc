@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+
+  fastapi:
+    build: 
+      context: ./python
+      dockerfile: Dockerfile
+    image: QRdoc/pyhton
+    container_name: qr_python
+    volumes: 
+      - ./code:/data/qr-doc/
+    ports:
+      - 8000:8000
+    networks:
+      - app-network
+
+  nginx:
+    build: 
+      context: ./nginx
+      dockerfile: Dockerfile
+    image: QRdoc/nginx
+    container_name: qr_nginx
+    volumes: 
+      - ./code:/data/qr-doc/
+    ports:
+      - 80:80
+    networks:
+      - app-network
+
+
+
+networks:
+  app-network:
+    driver: bridge
